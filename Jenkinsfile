@@ -2,33 +2,36 @@ pipeline {
     agent any
     
     tools {
-        nodejs 'node' // Llama a la herramienta que acabás de configurar
+        nodejs 'node' 
     }
 
     stages {
         stage('Test Local') {
             steps {
-                dir('/workspace_repo') {
-                    sh 'npm install' // Instalamos dependencias por las dudas
-                    sh 'npm test'
-                }
+                // Quitamos el dir('/workspace_repo'). Jenkins ya está posicionado en tu código.
+                sh 'npm install' 
+                sh 'npm test'
             }
         }
         
         stage('Inspección de Código') {
             steps {
-                dir('/workspace_repo') {
-                    echo "Enviando análisis a SonarQube (http://localhost:9000)..."
-                }
+                echo "Enviando análisis a SonarQube (http://localhost:9000)..."
+            }
+        }
+
+        // --- LA NUEVA ETAPA DE APROBACIÓN MANUAL ---
+        stage('Aprobación Manual para Prod') {
+            steps {
+                input message: '¿Desplegar los cambios en Producción?', ok: '¡Desplegar ahora!'
             }
         }
 
         stage('Deployment a Producción') {
             steps {
-                dir('/workspace_repo') {
-                    sh 'cp -r src/* /deploy/'
-                    echo "¡Despliegue exitoso!"
-                }
+                // Copia los archivos al volumen de Nginx
+                sh 'cp -r src/* /deploy/'
+                echo "¡Despliegue exitoso!"
             }
         }
     }

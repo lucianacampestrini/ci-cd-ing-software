@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: entorno-produccion
+    ports:
+      - "8080:80"
+    volumes:
+      - ./deploy:/usr/share/nginx/html 
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: servidor-ic
+    user: root 
+    ports:
+      - "8081:8080" 
+    volumes:
+      - ./jenkins_data:/var/jenkins_home 
+      - ./deploy:/deploy 
+
+  sonarqube:
+    image: sonarqube:lts-community
+    container_name: inspeccion-codigo
+    ports:
+      - "9000:9000" 
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: puente-ngrok
+    ports:
+      - "4040:4040" # Puerto para acceder a la interfaz visual de Ngrok
+    environment:
+      - NGROK_AUTHTOKEN=3FCDx3pQ12eN8c4kDz6EmssoAoy_5bhrjLXxfwZNS7pzpDht7
+    command: "http jenkins:8080" # Ngrok apunta al puerto interno del contenedor de Jenkins
+    depends_on:
+      - jenkins
