@@ -1,14 +1,11 @@
 pipeline {
     agent any
     
-    tools {
-        nodejs 'node' 
-    }
+    // ¡Adiós bloque tools! Jenkins ahora usará el Node.js nativo que instalaste a mano.
 
     stages {
         stage('Test Local') {
             steps {
-                // Quitamos el dir('/workspace_repo'). Jenkins ya está posicionado en tu código.
                 sh 'npm install' 
                 sh 'npm test'
             }
@@ -20,7 +17,6 @@ pipeline {
             }
         }
 
-        // --- LA NUEVA ETAPA DE APROBACIÓN MANUAL ---
         stage('Aprobación Manual para Prod') {
             steps {
                 input message: '¿Desplegar los cambios en Producción?', ok: '¡Desplegar ahora!'
@@ -29,7 +25,6 @@ pipeline {
 
         stage('Deployment a Producción') {
             steps {
-                // Copia los archivos al volumen de Nginx
                 sh 'cp -r src/* /deploy/'
                 echo "¡Despliegue exitoso!"
             }
