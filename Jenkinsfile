@@ -16,7 +16,7 @@ pipeline {
                 echo "Enviando análisis a SonarQube..."
                 sh 'npx sonar-scanner \
                   -Dsonar.projectKey=demo-ic \
-                  -Dsonar.sources=src/index.js \ 
+                  -Dsonar.sources=src/app.js \
                   -Dsonar.host.url=http://sonarqube:9000 \
                   -Dsonar.login=sqp_3f472b2620d3eda41a2dc84920e772dd9a7fd65a'
             }
