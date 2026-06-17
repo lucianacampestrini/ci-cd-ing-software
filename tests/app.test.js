@@ -19,10 +19,9 @@ describe('Pruebas del Frontend', () => {
         
         // DEMO PASO 2 (Falla el Pipeline): Al poner el botón verde en el HTML, 
         // esta línea va a buscar 'blue' y va a hacer explotar el test.
-        //expect(boton.classList.contains('blue')).toBe(true);
 
         //  DEMO PASO 3 (Pasa el Pipeline): Para arreglar la build, 
-         expect(boton.classList.contains('green')).toBe(true);
+         expect(boton.classList.contains('blue')).toBe(true);
     });
 
     test('Al presionar el botón, debe mostrar un mensaje de éxito', () => {
