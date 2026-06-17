@@ -4,22 +4,88 @@
     <meta charset="UTF-8">
     <title>Demo Integración Continua</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; }
-        button { padding: 15px 30px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; color: white; transition: 0.3s; }
+        /* Reset y tipografía moderna */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         
-        /* Clases de colores para la demo */
-        .blue { background-color: #007BFF; }
-        .green { background-color: #28A745; }
+        /* Tarjeta principal contenedora */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 { 
+            color: #2c3e50; 
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: #7f8c8d;
+            margin-bottom: 35px;
+            font-size: 15px;
+        }
+
+        /* Estilos base del botón con efectos modernos */
+        button { 
+            padding: 15px 40px; 
+            font-size: 18px; 
+            font-weight: 600;
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: white; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
         
-        #mensaje { margin-top: 20px; font-size: 20px; font-weight: bold; color: #333; }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* Clases de colores para la demo (Los tests buscan exactamente estos nombres) */
+        .blue { background-color: #3498db; }
+        .blue:hover { background-color: #2980b9; }
+        
+        .green { background-color: #2ecc71; }
+        .green:hover { background-color: #27ae60; }
+        
+        /* Contenedor del mensaje de éxito */
+        #mensaje { 
+            margin-top: 25px; 
+            font-size: 16px; 
+            font-weight: 500; 
+            color: #2c3e50; 
+            min-height: 24px; /* Evita que la tarjeta salte de tamaño al aparecer el texto */
+        }
     </style>
 </head>
 <body>
-    <h1>Demo de Despliegue Automatizado</h1>
-    
-    <button id="btn-accion" class="green">Soy un botón Azul</button>
-    
-    <p id="mensaje"></p>
+    <div class="card">
+        <h1>Despliegue Automatizado</h1>
+        <p class="subtitle">Demostración de CI/CD para Ingeniería en Sistemas</p>
+        
+        <button id="btn-accion" class="blue">Soy un botón</button>
+        
+        <p id="mensaje"></p>
+    </div>
 
     <script src="app.js"></script>
 </body>
