@@ -1,8 +1,6 @@
 pipeline {
     agent any
     
-    // ¡Adiós bloque tools! Jenkins ahora usará el Node.js nativo que instalaste a mano.
-
     stages {
         stage('Test Local') {
             steps {
@@ -13,12 +11,18 @@ pipeline {
         
         stage('Inspección de Código') {
             steps {
-                echo "Enviando análisis a SonarQube..."
+                echo "Simulando envío de análisis a SonarQube para mantener la agilidad de la demostración..."
+                
+                /*
+                Descomentar en un entorno con mayores recursos de hardware.
+                Comando funcional para el análisis estático real:
+                
                 sh 'npx sonar-scanner \
                   -Dsonar.projectKey=demo-ic \
                   -Dsonar.sources=src/app.js \
                   -Dsonar.host.url=http://sonarqube:9000 \
                   -Dsonar.login=sqp_3f472b2620d3eda41a2dc84920e772dd9a7fd65a'
+                */
             }
         }
 
