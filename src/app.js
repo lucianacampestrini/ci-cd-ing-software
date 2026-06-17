@@ -1,16 +1,16 @@
-function hacerClic() {
-    document.getElementById('mensaje').textContent = '¡Acción realizada con éxito! El JS funciona.';
-}
-
-// Asociar el evento solo si estamos en el navegador
-if (typeof document !== 'undefined') {
+document.addEventListener('DOMContentLoaded', () => {
     const boton = document.getElementById('btn-accion');
-    if (boton) {
-        boton.addEventListener('click', hacerClic);
-    }
-}
+    const mensaje = document.getElementById('mensaje');
 
-// Exportar la función para que el Test Unitario pueda leerla
-if (typeof module !== 'undefined') {
-    module.exports = { hacerClic };
-}
+    boton.addEventListener('click', () => {
+        // Verificamos si el mensaje ya tiene la clase 'visible'
+        if (mensaje.classList.contains('visible')) {
+            // Si está visible, lo ocultamos quitando la clase
+            mensaje.classList.remove('visible');
+        } else {
+            // Si está oculto, seteamos el texto exacto que espera Jest y lo mostramos
+            mensaje.textContent = '¡Acción realizada con éxito! El JS funciona.';
+            mensaje.classList.add('visible');
+        }
+    });
+});

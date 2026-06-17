@@ -4,76 +4,97 @@
     <meta charset="UTF-8">
     <title>Demo Integración Continua</title>
     <style>
-        /* Reset y tipografía moderna */
+        /* Reset y tipografía */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            /* Fondo oscuro tecnológico y moderno */
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        /* Tarjeta principal contenedora */
+        /* Tarjeta principal */
         .card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
             max-width: 500px;
             width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
 
         h1 { 
-            color: #2c3e50; 
-            font-size: 26px;
-            margin-bottom: 8px;
+            color: #0f172a; 
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         p.subtitle {
-            color: #7f8c8d;
-            margin-bottom: 35px;
+            color: #64748b;
+            margin-bottom: 40px;
             font-size: 15px;
+            font-weight: 500;
         }
 
-        /* Estilos base del botón con efectos modernos */
+        /* Estilos del botón */
         button { 
-            padding: 15px 40px; 
+            padding: 16px 48px; 
             font-size: 18px; 
             font-weight: 600;
             border: none; 
-            border-radius: 8px; 
+            border-radius: 50px; /* Botón redondeado tipo "píldora" */
             cursor: pointer; 
             color: white; 
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         button:active {
-            transform: translateY(0);
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
-        /* Clases de colores para la demo (Los tests buscan exactamente estos nombres) */
-        .blue { background-color: #3498db; }
-        .blue:hover { background-color: #2980b9; }
+        /* Clases de colores para la demo */
+        .blue { 
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); 
+        }
+        .green { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+        }
         
-        .green { background-color: #2ecc71; }
-        .green:hover { background-color: #27ae60; }
-        
-        /* Contenedor del mensaje de éxito */
+        /* Contenedor del mensaje con animación inicial oculta */
         #mensaje { 
-            margin-top: 25px; 
+            margin-top: 30px; 
             font-size: 16px; 
-            font-weight: 500; 
-            color: #2c3e50; 
-            min-height: 24px; /* Evita que la tarjeta salte de tamaño al aparecer el texto */
+            font-weight: 600; 
+            color: #10b981; 
+            min-height: 24px;
+            /* Variables de animación */
+            opacity: 0;
+            transform: translateY(-15px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Clase que se agrega vía JS para mostrar el mensaje */
+        #mensaje.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
