@@ -14,10 +14,15 @@ describe('Pruebas del Frontend', () => {
         require('../src/app.js'); // Cargamos la lógica
     });
 
-    test('El botón debe tener la clase "blue" inicialmente', () => {
+    test('El botón debe tener la clase de color correcta', () => {
         const boton = document.getElementById('btn-accion');
-        // Cuando en la demo cambies el botón a verde, este test va a fallar hasta que actualices la palabra a 'green' acá también.
+        
+        // DEMO PASO 2 (Falla el Pipeline): Al poner el botón verde en el HTML, 
+        // esta línea va a buscar 'blue' y va a hacer explotar el test.
         expect(boton.classList.contains('blue')).toBe(true);
+
+        //  DEMO PASO 3 (Pasa el Pipeline): Para arreglar la build, 
+        // expect(boton.classList.contains('green')).toBe(true);
     });
 
     test('Al presionar el botón, debe mostrar un mensaje de éxito', () => {
@@ -28,5 +33,3 @@ describe('Pruebas del Frontend', () => {
         expect(mensaje.textContent).toBe('¡Acción realizada con éxito! El JS funciona.');
     });
 });
-
-
