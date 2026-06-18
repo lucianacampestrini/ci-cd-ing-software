@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Test Local') {
             steps {
+                // Instala dependencias y corre tests. Si fallan, el pipeline se detiene aquí.
                 sh 'npm install' 
                 sh 'npm test'
             }
@@ -11,12 +12,10 @@ pipeline {
         
         stage('Inspección de Código') {
             steps {
-                echo "Simulando envío de análisis a SonarQube para mantener la agilidad de la demostración..."
+                echo "Simulando envío de análisis a SonarQube..."
                 
                 /*
-                Descomentar en un entorno con mayores recursos de hardware.
-                Comando funcional para el análisis estático real:
-                
+                // Comando para análisis real descomentado si tienes los recursos:
                 sh 'npx sonar-scanner \
                   -Dsonar.projectKey=demo-ic \
                   -Dsonar.sources=src/app.js \
@@ -26,17 +25,25 @@ pipeline {
             }
         }
 
-        stage('Aprobación Manual para Prod') {
-            steps {
-                input message: '¿Desplegar los cambios en Producción?', ok: '¡Desplegar ahora!'
-            }
-        }
+        // --- SE ELIMINÓ LA ETAPA DE APROBACIÓN MANUAL ---
 
         stage('Deployment a Producción') {
             steps {
+                echo "Iniciando despliegue automatizado..."
+                // Copia los archivos al directorio de deploy
                 sh 'cp -r src/* /deploy/'
-                echo "¡Despliegue exitoso!"
+                echo "¡Despliegue exitoso y automatizado!"
             }
+        }
+    }
+    
+    // Opcional: Agregar notificaciones post-buid
+    post {
+        success {
+            echo 'El Pipeline terminó correctamente y la aplicación fue desplegada.'
+        }
+        failure {
+            echo 'El Pipeline falló. Revisa los logs. No se realizó el despliegue.'
         }
     }
 }
