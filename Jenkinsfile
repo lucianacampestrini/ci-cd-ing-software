@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Test Local') {
             steps {
-                // Instala dependencias y corre tests. Si fallan, el pipeline se detiene aquí.
                 sh 'npm install' 
                 sh 'npm test'
             }
@@ -13,37 +12,28 @@ pipeline {
         stage('Inspección de Código') {
             steps {
                 echo "Simulando envío de análisis a SonarQube..."
-                
-                /*
-                // Comando para análisis real descomentado si tienes los recursos:
-                sh 'npx sonar-scanner \
-                  -Dsonar.projectKey=demo-ic \
-                  -Dsonar.sources=src/app.js \
-                  -Dsonar.host.url=http://sonarqube:9000 \
-                  -Dsonar.login=sqp_3f472b2620d3eda41a2dc84920e772dd9a7fd65a'
-                */
             }
         }
 
-        // --- SE ELIMINÓ LA ETAPA DE APROBACIÓN MANUAL ---
-
         stage('Deployment a Producción') {
             steps {
-                echo "Iniciando despliegue automatizado..."
-                // Copia los archivos al directorio de deploy
                 sh 'cp -r src/* /deploy/'
-                echo "¡Despliegue exitoso y automatizado!"
+                echo "¡Despliegue exitoso!"
             }
         }
     }
     
-    // Opcional: Agregar notificaciones post-buid
+    // El bloque post se ejecuta al finalizar el pipeline
     post {
         success {
-            echo 'El Pipeline terminó correctamente y la aplicación fue desplegada.'
+            mail to: 'lucianacampestrini11@gmail.com',
+                 subject: "✅ ÉXITO: Despliegue de Demo IC",
+                 body: "¡Felicitaciones! El pipeline se ejecutó correctamente y los cambios están en producción.\n\nPodés ver los detalles acá: ${env.BUILD_URL}"
         }
         failure {
-            echo 'El Pipeline falló. Revisa los logs. No se realizó el despliegue.'
+            mail to: 'lucianacampestrini11@gmail.com',
+                 subject: "❌ ERROR: Fallo en el Pipeline de Demo IC",
+                 body: "Atención: El pipeline ha fallado en alguna de sus etapas (Test, Inspección o Deploy).\n\nRevisá los logs de la consola acá para ver qué pasó: ${env.BUILD_URL}"
         }
     }
 }
