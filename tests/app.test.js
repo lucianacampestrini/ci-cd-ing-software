@@ -16,19 +16,37 @@ describe('Pruebas del Frontend', () => {
 
     test('El botón debe tener la clase de color correcta', () => {
         const boton = document.getElementById('btn-accion');
-        
-        // DEMO PASO 2 (Falla el Pipeline): Al poner el botón verde en el HTML, 
-        // esta línea va a buscar 'blue' y va a hacer explotar el test.
-
-        //  DEMO PASO 3 (Pasa el Pipeline): Para arreglar la build, 
-         expect(boton.classList.contains('blue')).toBe(true);
+        expect(boton.classList.contains('blue')).toBe(true);
     });
 
-    test('Al presionar el botón, debe mostrar un mensaje de éxito', () => {
+    test('Al presionar el botón sin nombre, debe mostrar el mensaje estándar', () => {
         const boton = document.getElementById('btn-accion');
         boton.click(); // Simulamos el clic
         const mensaje = document.getElementById('mensaje');
         
         expect(mensaje.textContent).toBe('¡Acción realizada con éxito! El JS funciona.');
+    });
+
+    test('El input de nombre debe transformar el texto a mayúsculas automáticamente', () => {
+        const inputNombre = document.getElementById('input-nombre');
+        
+        inputNombre.value = 'juan perez';
+        // Simulamos el evento de input
+        inputNombre.dispatchEvent(new Event('input'));
+        
+        expect(inputNombre.value).toBe('JUAN PEREZ');
+    });
+
+    test('Debe mostrar un saludo personalizado en mayúsculas al presionar el botón con un nombre', () => {
+        const inputNombre = document.getElementById('input-nombre');
+        const boton = document.getElementById('btn-accion');
+        const mensaje = document.getElementById('mensaje');
+
+        inputNombre.value = 'luciano';
+        inputNombre.dispatchEvent(new Event('input')); // Asegura transformación
+        
+        boton.click();
+        
+        expect(mensaje.textContent).toBe('¡Hola LUCIANO! Acción realizada con éxito! El JS funciona.');
     });
 });
