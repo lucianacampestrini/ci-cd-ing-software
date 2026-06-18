@@ -21,7 +21,7 @@ describe('Pruebas del Frontend', () => {
         // esta línea va a buscar 'blue' y va a hacer explotar el test.
 
         //  DEMO PASO 3 (Pasa el Pipeline): Para arreglar la build, 
-         expect(boton.classList.contains('green')).toBe(true);
+         expect(boton.classList.contains('blue')).toBe(true);
     });
 
     test('Al presionar el botón, debe mostrar un mensaje de éxito', () => {
